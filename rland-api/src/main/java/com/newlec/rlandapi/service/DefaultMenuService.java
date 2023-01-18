@@ -24,7 +24,7 @@ public class DefaultMenuService implements MenuService {
         if(opt.isPresent())
             menu = opt.get();
 
-        return null;
+        return menu;
     }
 
     // 목록가져오기
@@ -73,9 +73,10 @@ public class DefaultMenuService implements MenuService {
          Menu oldOne = get(menu.getId());
          if(menu.getName()!=null)
              oldOne.setName(menu.getName());
+
          if(menu.getPrice()!=0)
          oldOne.setPrice(menu.getPrice());
-       // TODO Auto-generated method stub
+
          Menu newOne = repository.save(oldOne);
        return newOne;
     }
