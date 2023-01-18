@@ -38,12 +38,12 @@ public class Menu {
     // 자식이 바뀌면...
     // @OneToOne(cascade = CascadeType.ALL) // ??
     // @OneToOne(fetch = FetchType.LAZY) // 1: 다 관계에서 중요하다
-    @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "menuId")
-    private NutritionFacts nutritionFacts; // getComments가 된 것. // 이것도 지원해 준다.
+    @OneToOne // 부모여서 넣어준 코드
+    @JoinColumn(name = "id", referencedColumnName = "menuId") // 이것(View나 join)도 지원해 준다.
+    private NutritionFacts nutritionFacts;  
     
 
-    // private List<Comment> comments; // 주석만 풀면 오류가 난다.
+    // private List<Comment> comments; //getComments가 된 것. 주석만 풀면 오류가 난다.
 
 
 
