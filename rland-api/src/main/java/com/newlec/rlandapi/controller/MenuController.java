@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class MenuController {
     @Autowired
     private MenuViewRepository repository;
 
-    
+    @CrossOrigin(origins = "http://localhost:5173") // CORS 오류 해결하기 위함
     @GetMapping
     public List<MenuView> getList(
         @RequestParam(defaultValue="1",name="p") int page , 
