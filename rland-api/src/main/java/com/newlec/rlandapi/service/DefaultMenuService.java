@@ -6,8 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.newlec.rlandapi.entity.Comment;
 import com.newlec.rlandapi.entity.Menu;
+import com.newlec.rlandapi.entity.MenuView;
+import com.newlec.rlandapi.repository.CommentRepository;
 import com.newlec.rlandapi.repository.MenuRepository;
+import com.newlec.rlandapi.repository.MenuViewRepository;
 
 @Service
 public class DefaultMenuService implements MenuService {
@@ -15,6 +19,11 @@ public class DefaultMenuService implements MenuService {
     @Autowired
     private MenuRepository repository;
 
+    @Autowired
+    private MenuViewRepository viewRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public Menu get(int id) {
@@ -67,17 +76,17 @@ public class DefaultMenuService implements MenuService {
     @Override
     public Menu update(Menu menu) {
          
-         menu.getName();
-         menu.getPrice();
- 
-         Menu oldOne = get(menu.getId());
-         if(menu.getName()!=null)
-             oldOne.setName(menu.getName());
+        menu.getName();
+        menu.getPrice();
 
-         if(menu.getPrice()!=0)
-         oldOne.setPrice(menu.getPrice());
+        Menu oldOne = get(menu.getId());
+        if(menu.getName()!=null)
+            oldOne.setName(menu.getName());
 
-         Menu newOne = repository.save(oldOne);
+        if(menu.getPrice()!=0)
+        oldOne.setPrice(menu.getPrice());
+
+        Menu newOne = repository.save(oldOne);
        return newOne;
     }
 
@@ -85,6 +94,26 @@ public class DefaultMenuService implements MenuService {
     public void delete(int id) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public List<MenuView> getViewList(int page, int size) {
+        
+        List<MenuView> list = viewRepository.findAll();
+        
+        for(MenuView mv : list){
+            // 특정컬럼을 가지고 데이터를 가져오고 싶다
+            // stream API : 컬렉션한 데이터를 View로 보여준다. // 
+            List<Comment> c = commentRepository.findAll()
+                                .stream()
+                                .filter(cmt->cmt.getMenuId() == mv.getId())
+                                .toList();
+                
+            mv.setComments(c);
+
+        }
+
+        return list;
     }
     
     

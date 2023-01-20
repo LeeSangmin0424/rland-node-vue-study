@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import com.newlec.rlandapi.entity.Menu;
+import com.newlec.rlandapi.entity.MenuView;
+import com.newlec.rlandapi.repository.MenuViewRepository;
 import com.newlec.rlandapi.service.MenuService;
 
 import jakarta.validation.Valid;
@@ -31,13 +33,19 @@ public class MenuController {
     @Autowired
     private MenuService service;
 
+    @Autowired
+    private MenuViewRepository repository;
+
     
     @GetMapping
-    public List<Menu> getList(
+    public List<MenuView> getList(
         @RequestParam(defaultValue="1",name="p") int page , 
         @RequestParam(defaultValue="3", name="s")int size){
 
-        List<Menu> list = service.getList(page,size);
+        // List<Menu> list = service.getList(page,size);
+        // List<MenuView> list = repository.findAll();
+
+        List<MenuView> list = service.getViewList(page,size);
 
         return list;
     }
