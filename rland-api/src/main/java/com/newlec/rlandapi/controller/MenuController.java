@@ -46,6 +46,7 @@ public class MenuController {
         // List<MenuView> list = repository.findAll();
 
         List<MenuView> list = service.getViewList(page,size);
+        
 
         return list;
     }
