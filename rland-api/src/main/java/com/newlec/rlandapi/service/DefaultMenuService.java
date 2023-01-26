@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.newlec.rlandapi.entity.Comment;
@@ -47,7 +48,7 @@ public class DefaultMenuService implements MenuService {
     public Menu create(Menu menu) {
         
        Menu newOne = repository.save(menu);
-
+        System.out.println(newOne);
        // 추가된 메뉴 1개 반환
         return newOne;
     }
@@ -96,11 +97,15 @@ public class DefaultMenuService implements MenuService {
         
     }
 
+    // 검색하는 기능 추가
     @Override
-    public List<MenuView> getViewList(int page, int size) {
+    public List<MenuView> getViewList(String query,int page, int size) {
         
-        List<MenuView> list = viewRepository.findAll();
-        
+        // List<MenuView> list = viewRepository.findAll()
+        //                                     .stream()
+        //                                     .filter(mv -> mv.getName().contains(query))
+        //                                     .toList();
+        List<MenuView> list = viewRepository.getViewList("%"+query+"%", PageRequest.of(page-1,6));
         for(MenuView mv : list){
             // 특정컬럼을 가지고 데이터를 가져오고 싶다
             // stream API : 컬렉션한 데이터를 View로 보여준다. // 

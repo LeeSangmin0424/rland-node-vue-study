@@ -40,13 +40,14 @@ public class MenuController {
     @CrossOrigin(origins = "http://localhost:5173") // CORS 오류 해결하기 위함
     @GetMapping
     public List<MenuView> getList(
+        @RequestParam(defaultValue="",name="q") String query , 
         @RequestParam(defaultValue="1",name="p") int page , 
         @RequestParam(defaultValue="3", name="s")int size){
 
         // List<Menu> list = service.getList(page,size);
         // List<MenuView> list = repository.findAll();
 
-        List<MenuView> list = service.getViewList(page,size);
+        List<MenuView> list = service.getViewList(query,page,size);
         
 
         return list;
@@ -66,11 +67,12 @@ public class MenuController {
     }
 
     
-        
-    @PostMapping(consumes={
-        MediaType.APPLICATION_JSON_VALUE,
-        MediaType.APPLICATION_XML_VALUE
-    })
+    // @PostMapping(consumes={
+        //     MediaType.APPLICATION_JSON_VALUE,
+        //     MediaType.APPLICATION_XML_VALUE
+        // })
+        @CrossOrigin(origins = "http://localhost:5173")     
+        @PostMapping
     public Menu create(@Valid @RequestBody Menu menu){
         //name, price 만 전달 , id제외
         Menu newOne = service.create(menu); 
