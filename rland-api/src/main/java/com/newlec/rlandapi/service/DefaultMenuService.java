@@ -91,9 +91,10 @@ public class DefaultMenuService implements MenuService {
        return newOne;
     }
 
+    // 삭제 구현
     @Override
     public void delete(int id) {
-        // TODO Auto-generated method stub
+        repository.delete(Menu.builder().id(id).build()); // menu 객체
         
     }
 

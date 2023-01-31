@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,6 +28,7 @@ import com.newlec.rlandapi.service.MenuService;
 
 import jakarta.validation.Valid;
 
+// @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("menus")
 public class MenuController {
@@ -37,7 +39,8 @@ public class MenuController {
     @Autowired
     private MenuViewRepository repository;
 
-    @CrossOrigin(origins = "http://localhost:5173") // CORS 오류 해결하기 위함
+
+    // @CrossOrigin(origins = "http://localhost:5173") // CORS 오류 해결하기 위함
     @GetMapping
     public List<MenuView> getList(
         @RequestParam(defaultValue="",name="q") String query , 
@@ -71,7 +74,7 @@ public class MenuController {
         //     MediaType.APPLICATION_JSON_VALUE,
         //     MediaType.APPLICATION_XML_VALUE
         // })
-        @CrossOrigin(origins = "http://localhost:5173")     
+        // @CrossOrigin(origins = "http://localhost:5173")     
         @PostMapping
     public Menu create(@Valid @RequestBody Menu menu){
         //name, price 만 전달 , id제외
@@ -94,6 +97,9 @@ public class MenuController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable int id){
+        System.out.println(id);
+
+        service.delete(id);
 
         //삭제
         return ResponseEntity.noContent().build();
